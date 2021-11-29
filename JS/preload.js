@@ -1,10 +1,11 @@
 
-let slider,actualImg, maxImg,index;
+let slider,actualImg, maxImg,index,sTime,sLoad,btnValue,;
 let imgs = [];
 let advanceBtn = document.querySelector("#advanceButton");
 let retractBtn = document.querySelector("#retractButton");
 let timer;
-let time = 20000;
+let time = 0;
+
 
 
 function preLoad(){
@@ -33,26 +34,30 @@ function start(){
     preLoad();
     actualImg = 0;
     maxImg = imgs.length;
+    time=0;
     slider= document.querySelector("#divSlider");
     loadImage(actualImg);
-    advanceBtn.addEventListener("click",tradeImageF);
-    retractBtn.addEventListener("click",tradeImageB);
-    timer = setInterval(tradeImageF,time);
+    advanceBtn.addEventListener("click",function(){
+        buttonValue= 1;
+        tradeImage(buttonValue);
+    });
+    retractBtn.addEventListener("click",function(){
+        buttonValue = -1;
+        tradeImage(buttonValue);
+    });
 }
 
-function tradeImageB(){
-    actualImg--;
-    if(actualImg < 0){
-        actualImg = 4;
-    }
-    loadImage(actualImg);
-}
 
-function tradeImageF(){
-    actualImg++;
+
+function tradeImage(direction){
+    time=0;
+    actualImg+=direction;
     if(actualImg > maxImg){
         actualImg = 0;
+    }else if(actualImg < 0){
+        actualImg = maxImg;
     }
+
     loadImage(actualImg);
 }
 
